@@ -11,11 +11,18 @@ namespace GridTools
     {
         public Vector2 position { get; private set; }
         public int value { get; private set; }
+        public bool isSelected { get; private set; }
 
-        public Tile(int X, int Y, int val)
+        public Tile(int X, int Y, int val, bool isSelected)
         {
             position = new Vector2(X, Y);
             value = val;
+            this.isSelected = isSelected;
+        }
+
+        public void SetSelected(bool isSelected)
+        {
+            this.isSelected = isSelected;
         }
     }
 
@@ -55,6 +62,11 @@ namespace GridTools
         public void SetTile(int X, int Y, Tile tile)
         {
             this.tiles[X, Y] = tile;
+        }
+
+        public void DrawGrid(Graphics g, Vector2 StartPoint)
+        {
+
         }
     }
 }

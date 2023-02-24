@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(582, 553);
             this.MaximizeBox = false;
             this.Name = "Solver";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Solver";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Solver_Paint);

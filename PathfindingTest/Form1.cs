@@ -7,14 +7,19 @@ namespace PathfindingTest
     {
         Graphics g;
         Tile[] tiles;
+        Point start;
+        Point end;
+        string DungeonPath = "";
         public Form1()
         {
             InitializeComponent();
-            GenerateTable();
         }
 
         void GenerateTable()
         {
+            tiles = null;
+            table.Rows.Clear();
+            table.Columns.Clear();
             string d = GetDungeon();
             d = d.Replace("[", "").Replace("]", "_");
             List<string> temp = d.Split("_").ToList();
@@ -63,7 +68,7 @@ namespace PathfindingTest
 
                 for (int e = 0; e < s.Length; e++)
                 {
-                    Tile tile = new Tile(e, i, int.Parse(s[e]));
+                    Tile tile = new Tile(e, i, int.Parse(s[e]), false);
                     tiles.Add(tile);
                 }
             }
@@ -73,7 +78,7 @@ namespace PathfindingTest
 
         string GetDungeon()
         {
-            return File.ReadAllLines("C:\\Programmieren\\Test\\Dungeon.txt")[0];
+            return File.ReadAllLines(DungeonPath)[0];
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -81,14 +86,26 @@ namespace PathfindingTest
 
         }
 
-        private void ButtonImport_Click(object sender, EventArgs e)
+        private void ButtonImport_Click(object sender, EventArgs ea)
         {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                DungeonPath = openFileDialog.FileName;
+
+                string[] temp = File.ReadAllLines(DungeonPath);
+                string[] s = temp[1].Split(",");
+                string[] e = temp[2].Split(",");
+                start = new Point(int.Parse(s[0]), int.Parse(s[1]));
+                end = new Point(int.Parse(e[0]), int.Parse(e[1]));
+
+                GenerateTable();
+            }
 
         }
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            Solver solver = new Solver(tiles, new System.Numerics.Vector2(), new System.Numerics.Vector2());
+            Solver solver = new Solver(tiles, start, end);
             solver.FormBorderStyle= FormBorderStyle.Fixed3D;
             solver.Show();
         }

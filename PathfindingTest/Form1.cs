@@ -23,12 +23,10 @@ namespace PathfindingTest
             string d = GetDungeon();
             d = d.Replace("[", "").Replace("]", "_");
             List<string> temp = d.Split("_").ToList();
-            Debug.WriteLine(temp.Count);
 
             List<string> removeList = new List<string>();
             for (int i = 0; i < temp.Count; i++)
             {
-                Debug.WriteLine(i);
                 string s = temp[i];
 
                 s = s.Trim(',');

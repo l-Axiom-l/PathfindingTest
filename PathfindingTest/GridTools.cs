@@ -95,11 +95,9 @@ namespace GridTools
             int GridRowCount = tiles.GetLength(1);
             int sizeX = (size.Width - StartPoint.X * 2 - (offset * (GridColumnCount - 1))) / GridColumnCount;
             int sizeY = (size.Height - StartPoint.Y * 2 - (offset * (GridRowCount - 1))) / GridRowCount;
-            //Font f = new Font(SystemFonts.DefaultFont.FontFamily, sizeY / 3, FontStyle.Regular);
 
             
             Rectangle[] recs = new Rectangle[GridColumnCount * GridRowCount];
-            //(Point, string)[] temp = new (Point, string)[tiles.Length];
             int id = 0;
             for (int i = 0; i < GridRowCount; i++)
             {
@@ -107,17 +105,11 @@ namespace GridTools
                 {
                     Point P = new Point(StartPoint.X + ((sizeX + offset) * e), StartPoint.Y + ((sizeY + offset) * i));
                     recs[id] = new Rectangle(P, new Size(sizeX, sizeY));
-                    //temp[id] = (new Point(P.X, P.Y), tiles[i,e].value.ToString());
                     id++;
                 }
             }
             g.FillRectangles(GridBrushes.mainBrush, recs);
             g.DrawRectangles(GridBrushes.blackPen, recs);
-
-            //foreach((Point,string) t in temp)
-            //{
-            //    g.DrawString(t.Item2, f, fontBrush, t.Item1);
-            //}
         }
 
         public void DrawTile(Tile tile, Color color, Graphics g, Size size, Point StartPoint)

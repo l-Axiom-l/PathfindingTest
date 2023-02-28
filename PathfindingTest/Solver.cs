@@ -78,21 +78,11 @@ namespace PathfindingTest
             Path.Add(grid.GetTile(CurrentTile));
             while (true)
             {
-                ////moveableTiles[0] = grid.GetTile(new Point(CurrentTile.X + 1, CurrentTile.Y));
-                ////moveableTiles[1] = grid.GetTile(new Point(CurrentTile.X, CurrentTile.Y + 1));
-
-                ////moveableTiles[0] ??= new Tile(0, 0, 9999, false);
-                ////moveableTiles[1] ??= new Tile(0, 0, 9999, false);
-
-                ////Tile temp = moveableTiles.MinBy(x => x.value);
-                ////Debug.WriteLine(temp.value);
-                ////CurrentTile = temp.position;
 
                 CurrentTile = WFC.GetNextPoint();
                 Tile temp = grid.GetTile(CurrentTile);
                 Path.Add(temp);
                 grid.DrawTile(temp, Color.DarkRed, g, ClientSize, drawPoint);
-                //Invoke(() => temp.SetSelected(true));
 
                 if (CurrentTile.Equals(target) || WFC.waveFunctionCollapsed)
                     break;

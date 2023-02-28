@@ -101,7 +101,7 @@
             this.Controls.Add(this.table);
             this.Controls.Add(this.ButtonImport);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Grid Display";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.table)).EndInit();
             this.ResumeLayout(false);

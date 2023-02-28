@@ -15,7 +15,6 @@ namespace GridTools
     {
         public Point position { get; private set; }
         public int value { get; private set; }
-        public int cost { get;  private set; }
         public bool isSelected { get; private set; }
 
 
@@ -26,13 +25,7 @@ namespace GridTools
             position = new Point(X, Y);
             value = val != null ? val : 0;
             this.isSelected = isSelected;
-        }
-
-        public void SetCost(int cost)
-        {
-            this.cost = cost;
-            Changed?.Invoke(this);
-        }
+        } 
 
         public void SetSelected(bool isSelected)
         {

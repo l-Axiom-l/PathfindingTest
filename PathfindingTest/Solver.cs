@@ -57,7 +57,7 @@ namespace PathfindingTest
                 grid.DrawTile(tile, GridBrushes.mainBrush.Color, g, ClientSize, drawPoint);
         }
 
-        async void Solve()
+        void Solve()
         {
             List<Tile> Path = new List<Tile>();
             int currentPathCost = 0;
@@ -66,24 +66,45 @@ namespace PathfindingTest
             Point target = endPoint;
             Tile[] moveableTiles = new Tile[2];
 
+            List<WaveFunction> wf = new List<WaveFunction>();
+            foreach(Tile t in tiles)
+            {
+                WaveFunction temp = new WaveFunction(t.value, t.position);
+                wf.Add(temp);
+            }
+
+            WaveFunctionCollapseHandler WFC = new WaveFunctionCollapseHandler(wf.ToArray());
+
             Path.Add(grid.GetTile(CurrentTile));
             while (true)
             {
-                moveableTiles[0] = grid.GetTile(new Point(CurrentTile.X + 1, CurrentTile.Y));
-                moveableTiles[1] = grid.GetTile(new Point(CurrentTile.X, CurrentTile.Y + 1));
+                ////moveableTiles[0] = grid.GetTile(new Point(CurrentTile.X + 1, CurrentTile.Y));
+                ////moveableTiles[1] = grid.GetTile(new Point(CurrentTile.X, CurrentTile.Y + 1));
 
-                moveableTiles[0] ??= new Tile(0, 0, 9999, false);
-                moveableTiles[1] ??= new Tile(0, 0, 9999, false);
+                ////moveableTiles[0] ??= new Tile(0, 0, 9999, false);
+                ////moveableTiles[1] ??= new Tile(0, 0, 9999, false);
 
-                Tile temp = moveableTiles.MinBy(x => x.value);
-                Debug.WriteLine(temp.value);
+                ////Tile temp = moveableTiles.MinBy(x => x.value);
+                ////Debug.WriteLine(temp.value);
+                ////CurrentTile = temp.position;
+
+                CurrentTile = WFC.GetNextPoint();
+                Tile temp = grid.GetTile(CurrentTile);
                 Path.Add(temp);
-                Invoke(() => temp.SetSelected(true));
-                CurrentTile = temp.position;
+                grid.DrawTile(temp, Color.DarkRed, g, ClientSize, drawPoint);
+                //Invoke(() => temp.SetSelected(true));
 
-                if (CurrentTile.Equals(target))
+                if (CurrentTile.Equals(target) || WFC.waveFunctionCollapsed)
                     break;
             }
+
+            foreach(Point p in WFC.GetBestPath(endPoint))
+            {
+                grid.CrossTile(grid.GetTile(p), g, ClientSize, drawPoint);
+            }
+
+            grid.DrawTile(new Tile(startPoint.X, startPoint.Y, 0, false), Color.Green, g, ClientSize, drawPoint);
+            grid.DrawTile(new Tile(endPoint.X, endPoint.Y, 0, false), Color.Orange, g, ClientSize, drawPoint);
         }
     }
 }
